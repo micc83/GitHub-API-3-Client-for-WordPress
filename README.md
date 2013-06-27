@@ -12,8 +12,10 @@ That's it, check the following example, to understand how Wp_Github_Client works
 ### Example
 
 ```php
+// Include the client
 require_once( 'class-wp-github-client.php' );
 
+// Configure the client, at first run you'll be asked for permission
 $github_client = new Wp_Github_Client( array(
     'client_id'     => 'client_id',
     'client_secret' => 'client_secret',
