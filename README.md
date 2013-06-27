@@ -16,19 +16,19 @@ require_once( 'class-wp-github-client.php' );
 
 $github_client = new Wp_Github_Client( array(
     'client_id' => 'client_id',
-'client_secret' => 'client_secret',
-'scope' => 'gist'
+    'client_secret' => 'client_secret',
+    'scope' => 'gist'
 ) );
 
 // Create a new gists
 $github_client->post( '/gists', array(
-'description' => 'the description for this gist',
-'public' => true,
-'files' => array(
-'file1.txt' => array(
-'content' => 'String file contents'
-)
-)
+    'description' => 'the description for this gist',
+    'public' => true,
+    'files' => array(
+    'file1.txt' => array(
+        'content' => 'String file contents'
+        )
+    )
 ) );
 
 // Get starred gists of the current user
