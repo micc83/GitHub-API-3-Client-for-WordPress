@@ -7,7 +7,7 @@
  */
 class Wp_Github_Client {
 		
-	var // Default query args
+	var 	// Default query args
 		$query_args = array(
 			'query'		=>	'',
 			'method'	=>	'GET',
@@ -20,14 +20,14 @@ class Wp_Github_Client {
 				// Token
 	 protected 	$bearer_token,
 			
-				// Default options
-				$args = array(
-					'client_id'		=>	'client_id',
-					'client_secret'	=>	'client_secret',
-					'scope'			=>	'gist',
-					'redirect_uri'	=>	'',
-					'show_login'	=>	true
-				);
+			// Default options
+			$args = array(
+				'client_id'		=>	'client_id',
+				'client_secret'	=>	'client_secret',
+				'scope'			=>	'gist',
+				'redirect_uri'	=>	'',
+				'show_login'	=>	true
+			);
 	
 	/**
 	 * Constructor
