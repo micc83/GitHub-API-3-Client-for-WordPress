@@ -15,18 +15,18 @@ That's it, check the following example, to understand how Wp_Github_Client works
 require_once( 'class-wp-github-client.php' );
 
 $github_client = new Wp_Github_Client( array(
-    'client_id' => 'client_id',
+    'client_id'     => 'client_id',
     'client_secret' => 'client_secret',
-    'scope' => 'gist'
+    'scope'         => 'gist'
 ) );
 
 // Create a new gists
 $github_client->post( '/gists', array(
-    'description' => 'the description for this gist',
-    'public' => true,
-    'files' => array(
-    'file1.txt' => array(
-        'content' => 'String file contents'
+    'description'   => 'the description for this gist',
+    'public'        => true,
+    'files'         => array(
+    'file1.txt'     => array(
+        'content'   => 'String file contents'
         )
     )
 ) );
