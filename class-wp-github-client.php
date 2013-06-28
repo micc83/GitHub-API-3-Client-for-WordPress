@@ -15,7 +15,7 @@ class Wp_Github_Client {
 		),
 		
 		// If there are errors stop queries
-		$has_error = false;
+		$is_authorized = true;
 	
 				// Token
 	 protected 	$bearer_token,
@@ -57,7 +57,7 @@ class Wp_Github_Client {
 			$this->the_login();
 		
 		// Bearer token is not set so...
-		$this->has_error = true;
+		$this->is_authorized = false;
 		
 	}
 	
@@ -93,7 +93,7 @@ class Wp_Github_Client {
 		
 		if ( is_wp_error( $result ) || 200 != $result['response']['code'] || false !== strpos( $result['body'], 'bad_verification_code' ) ){
 				
-			$this->has_error = true;
+			$this->is_authorized = false;
 			
 			return $this->bail( __( 'Can\'t get the bearer token, check your credentials', 'wp_github_client' ), $result );
 			
@@ -141,7 +141,7 @@ class Wp_Github_Client {
 	 */
 	public function is_authorized() {
 		
-		return (bool) $this->bearer_token;
+		return $this->is_authorized;
 		
 	}
 	
@@ -257,7 +257,7 @@ class Wp_Github_Client {
 			
 		$this->query_args = array_merge( $this->query_args, $args );
 		
-		if ( $this->has_error || empty( $this->query_args['query'] ) )
+		if ( !$this->is_authorized || empty( $this->query_args['query'] ) )
 			return false;
 		
 		// Arguments 
@@ -303,8 +303,18 @@ class Wp_Github_Client {
 		$result = wp_remote_post( $url , $post_args  );
 		
 		// On error return false
-		if ( is_wp_error( $result ) || ( 200 != $result['response']['code'] && 204 != $result['response']['code'] ) )
+		if ( is_wp_error( $result ) || !in_array( $result['response']['code'], array( 200, 204, 401 ) ) )
 			return $this->bail( __( 'Bearer Token is good, check your query or scope.', 'wp_github_client' ), $result );
+			
+		// On 401 ( Unauthorized ) delete the bearer token and stop others query
+		if ( 401 == $result['response']['code'] ){
+		
+			$this->is_authorized = false;
+			delete_option( 'github_bearer_token' );
+			
+			return false;
+			
+		}
 		
 		// For put and delete return Bool
 		if ( in_array( $this->query_args['method'] , array( 'DELETE', 'PUT' ) ) ){
