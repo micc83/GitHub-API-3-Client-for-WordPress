@@ -3,7 +3,7 @@
 /**
  * Wp_Github_Client
  *
- * @ver 1.0.0
+ * @ver 1.0.1
  */
 class Wp_Github_Client {
 		
