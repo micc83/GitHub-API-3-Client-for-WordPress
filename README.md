@@ -17,7 +17,7 @@ require_once( 'class-wp-github-client.php' );
 
 // Configure the client, at first run you'll be asked for permission
 $github_client = new Wp_Github_Client( array(
-    'app_name'      =>  'My application name'
+    'app_name'      =>  'My application name',
     'client_id'     =>  'client_id',
     'client_secret' =>  'client_secret',
     'scope'         =>  'gist'
