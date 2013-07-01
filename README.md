@@ -17,18 +17,19 @@ require_once( 'class-wp-github-client.php' );
 
 // Configure the client, at first run you'll be asked for permission
 $github_client = new Wp_Github_Client( array(
-    'client_id'     => 'client_id',
-    'client_secret' => 'client_secret',
-    'scope'         => 'gist'
+    'app_name'      =>  'My application name'
+    'client_id'     =>  'client_id',
+    'client_secret' =>  'client_secret',
+    'scope'         =>  'gist'
 ) );
 
 // Create a new gists
 $github_client->post( '/gists', array(
-    'description'   => 'the description for this gist',
-    'public'        => true,
-    'files'         => array(
-    'file1.txt'     => array(
-        'content'   => 'String file contents'
+    'description'   =>  'the description for this gist',
+    'public'        =>  true,
+    'files'         =>  array(
+    'file1.txt'     =>  array(
+        'content'   =>  'String file contents'
         )
     )
 ) );
