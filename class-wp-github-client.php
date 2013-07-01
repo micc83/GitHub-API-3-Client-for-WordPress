@@ -3,7 +3,7 @@
 /**
  * Wp_Github_Client
  *
- * @ver 1.0.1
+ * @ver 1.0.0
  */
 class Wp_Github_Client {
 		
@@ -22,6 +22,7 @@ class Wp_Github_Client {
 			
 			// Default options
 			$args = array(
+				'app_name'		=>	'myApp',
 				'client_id'		=>	'client_id',
 				'client_secret'	=>	'client_secret',
 				'scope'			=>	'gist',
@@ -79,7 +80,8 @@ class Wp_Github_Client {
 			'httpversion'	=>	'1.0',
 			'blocking'		=>	true,
 			'headers'		=>	array(
-				'Accept'		=>	'application/json'
+				'Accept'		=>	'application/json',
+				'User-Agent'	=>	$this->args['app_name']
 			),
 			'body' => array( 
 				'client_id'		=>	$this->args['client_id'], 
@@ -143,6 +145,27 @@ class Wp_Github_Client {
 		
 		return $this->is_authorized;
 		
+	}
+	
+	/**
+	 * Check authorization
+	 * 
+	 * @return Bool Bearer Token is valid
+	 */
+	public function check_authorization() {
+		
+		if ( ! $this->is_authorized )
+			return false;
+		
+		$query = 'https://' . $this->args['client_id'] . ':' . $this->args['client_secret'] . '@api.github.com/applications/' . $this->args['client_id'] . '/tokens/' . $this->bearer_token;
+		
+		if ( $this->get( $query ) )
+			return true;
+		
+		delete_option( 'github_bearer_token' );
+		
+		return $this->is_authorized = false;
+	
 	}
 	
 	/**
@@ -268,7 +291,8 @@ class Wp_Github_Client {
 			'httpversion'	=> 	'1.0',
 			'blocking'		=> 	true,
 			'headers'		=> 	array(
-				'Accept'		=>	'application/json'
+				'Accept'		=>	'application/json',
+				'User-Agent'	=>	$this->args['app_name']
 			),
 			'body'			=>	'',
 			'cookies'		=>	array()
@@ -277,8 +301,8 @@ class Wp_Github_Client {
 		// Base API url
 		$url = 'https://api.github.com';
 		
-		// If the query doesn't contain the full url just prepend it
-		if ( 0 !== strpos( $this->query_args['query'], $url ) )
+		// If the query doesn't contain already the full url just prepend it
+		if ( false === strpos( $this->query_args['query'], 'api.github.com' ) )
 			$url = $url . $this->query_args['query'];
 		
 		// GET OR POST ?!?
@@ -309,10 +333,7 @@ class Wp_Github_Client {
 		// On 401 ( Unauthorized ) delete the bearer token and stop others query
 		if ( 401 == $result['response']['code'] ){
 		
-			$this->is_authorized = false;
-			delete_option( 'github_bearer_token' );
-			
-			return false;
+			return $this->check_authorization();
 			
 		}
 		
