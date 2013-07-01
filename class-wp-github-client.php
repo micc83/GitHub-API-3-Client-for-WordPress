@@ -24,10 +24,10 @@ class Wp_Github_Client {
 			$args = array(
 				'app_name'		=>	'myApp',
 				'client_id'		=>	'client_id',
-				'client_secret'	=>	'client_secret',
+				'client_secret'		=>	'client_secret',
 				'scope'			=>	'gist',
-				'redirect_uri'	=>	'',
-				'show_login'	=>	true
+				'redirect_uri'		=>	'',
+				'show_login'		=>	true
 			);
 	
 	/**
@@ -76,16 +76,16 @@ class Wp_Github_Client {
 		$args = array(
 			'method'		=>	'POST',
 			'timeout'		=>	45,
-			'redirection'	=>	5,
-			'httpversion'	=>	'1.0',
+			'redirection'		=>	5,
+			'httpversion'		=>	'1.0',
 			'blocking'		=>	true,
 			'headers'		=>	array(
 				'Accept'		=>	'application/json',
-				'User-Agent'	=>	$this->args['app_name']
+				'User-Agent'		=>	$this->args['app_name']
 			),
 			'body' => array( 
 				'client_id'		=>	$this->args['client_id'], 
-				'client_secret'	=>	$this->args['client_secret'],
+				'client_secret'		=>	$this->args['client_secret'],
 				'code'			=>	$code
 				),
 			'cookies'		=>	array()
@@ -120,7 +120,7 @@ class Wp_Github_Client {
 		
 		$param = array(
 			'client_id'		=>	$this->args['client_id'],
-			'redirect_uri'	=>	$this->args['redirect_uri'],
+			'redirect_uri'		=>	$this->args['redirect_uri'],
 			'scope'			=>	$this->args['scope']
 		);
 		
@@ -287,12 +287,12 @@ class Wp_Github_Client {
 		$post_args = array(
 			'method'		=> 	$this->query_args['method'],
 			'timeout'		=> 	45,
-			'redirection'	=> 	5,
-			'httpversion'	=> 	'1.0',
+			'redirection'		=> 	5,
+			'httpversion'		=> 	'1.0',
 			'blocking'		=> 	true,
 			'headers'		=> 	array(
 				'Accept'		=>	'application/json',
-				'User-Agent'	=>	$this->args['app_name']
+				'User-Agent'		=>	$this->args['app_name']
 			),
 			'body'			=>	'',
 			'cookies'		=>	array()
