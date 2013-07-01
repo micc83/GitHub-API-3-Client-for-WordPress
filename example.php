@@ -3,9 +3,10 @@
 require_once( 'class-wp-github-client.php' );
 
 $github_client = new Wp_Github_Client( array(
-    'client_id'        =>    'client_id',
-	'client_secret'    =>    'client_secret',
-	'scope'            =>    'gist'
+	'app_name'		=>	'My Application name'					
+    'client_id'		=>	'client_id',
+	'client_secret'	=>	'client_secret',
+	'scope'			=>	'gist'
 ) );
 
 // Create a new gists
